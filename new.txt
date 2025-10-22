@@ -1,0 +1,31 @@
+use the embeddings to train a simple classifier to see if we can get anything interesting out of it. 
+
+focus only on DINO as the output embeddings is of the nice size. 
+use nromalisation because it makes sense. 
+
+then do maybe a comparison between rgb and gray for the mosaic. only one set of comparison. not 48. 
+
+we want to see if the features are good, which they seem to be, and see how useful they are. 
+also choose appropriate metrics for analysing the results, considering the imnalance
+
+we like explainable stuff. 
+figure out decision tree or something similar. 
+
+
+
+so after looking at the simple classifiers, we can see that the perfromance of the model on the data is quite good, which is great. we can say something about 
+the classifiers vs the mosaic thinking about how the featueres are actually good but we can see that they are very focused on color, so maybe we should see what would be the difference with gray
+
+maybe I can still train a resnet on the images, or something, to see how well the difference between using embeddings and using images is. maybe a YOLO? 
+
+and I want to still do it on the gray vs the rgb ones, for funsies
+
+
+
+some sort of logic: 
+given that we have seen the behaviour of embeddings in a zero shot setting, we are now going to look at how the embeddings can be used by themselves specifically. 
+first we train a simple classifier, can that already work for the data, compared to a visual one like yolo/resnet? 
+then, we can ee that the embeddings work well for classification, but, can they actually be used for other things? a clustering would expect them to do something considering how they should still help with the representation space, but is it true?
+
+so now I want to grayscale the images, extract embeddings, and train a classifier. thn I want to do the mosaic thing, and I want to train a normal resnet on the actual images
+

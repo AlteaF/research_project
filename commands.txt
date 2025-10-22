@@ -1,0 +1,30 @@
+extract embeddings train 
+
+a) DINOv2
+    python3 extract_embeddings_dinov2.py --image_dir ../dataset/cropped/cropped_train  --output_file ../embeddings_files/dino_embeddings_train.npz
+
+b) DINOv2 gray
+    python3 extract_embeddings_dinov2.py --image_dir ../dataset/cropped/cropped_train_gray  --output_file ../embeddings_files/dino_embeddings_train_gray.npz
+
+extract embeddings test
+c) DINOv2
+    python3 extract_embeddings_dinov2.py --image_dir ../dataset/cropped/cropped_test  --output_file ../embeddings_files/dino_embeddings_test.npz
+
+d) DINOv2 gray
+    python3 extract_embeddings_dinov2.py --image_dir ../dataset/cropped/cropped_test_gray  --output_file ../embeddings_files/dino_embeddings_test_gray.npz
+
+normalise embeddings 
+a) DINOv2 
+    python3 embeddings_normaliser.py --input_file ../embeddings_files/dino_embeddings_train.npz --output_file ../normalised_embeddings/dino_normalised_embeddings_train.npz
+
+b) DINOv2 Gray
+    python3 embeddings_normaliser.py --input_file ../embeddings_files/dino_embeddings_train_gray.npz --output_file ../normalised_embeddings/dino_normalised_embeddings_train_gray.npz
+
+c) DINO test 
+
+    python3 embeddings_normaliser.py --input_file ../embeddings_files/dino_embeddings_test.npz --output_file ../normalised_embeddings/dino_normalised_embeddings_test.npz
+
+d) dino gray test 
+    python3 embeddings_normaliser.py --input_file ../embeddings_files/dino_embeddings_test_gray.npz --output_file ../normalised_embeddings/dino_normalised_embeddings_test_gray.npz
+
+
