@@ -28,3 +28,16 @@ d) dino gray test
     python3 embeddings_normaliser.py --input_file ../embeddings_files/dino_embeddings_test_gray.npz --output_file ../normalised_embeddings/dino_normalised_embeddings_test_gray.npz
 
 
+
+
+plot UMAP visualisation 
+
+python3 umap_plot.py --npz_path ../normalised_embeddings/dino_normalised_embeddings_train.npz 
+
+
+t sne vis 
+python3 tsne.py --embedding_file ../normalised_embeddings/dino_normalised_embeddings_train.npz --output_file ../tsne_vis_dino_norm_train.png 
+
+
+t sne vis of cleaned embeddings
+python3 tsne.py --embedding_file ../mahala_filtered_embeddings/dino_normalised_embeddings_train_filtered_mahalanobis.npz --output_file ../tsne_vis_mahala.png

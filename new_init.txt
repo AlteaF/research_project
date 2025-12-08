@@ -1,0 +1,12 @@
+use the embeddings to train a simple classifier to see if we can get anything interesting out of it. 
+
+focus only on DINO as the output embeddings is of the nice size. 
+use nromalisation because it makes sense. 
+
+then do maybe a comparison between rgb and gray for the mosaic. only one set of comparison. not 48. 
+
+we want to see if the features are good, which they seem to be, and see how useful they are. 
+also choose appropriate metrics for analysing the results, considering the imnalance
+
+we like explainable stuff. 
+figure out decision tree or something similar. 

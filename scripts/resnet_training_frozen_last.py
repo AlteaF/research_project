@@ -10,6 +10,7 @@ import numpy as np
 import os
 
 
+
 def split_dataset(dataset, val_fraction=0.5, random_state=42):
     """
     Splits a dataset into two equal parts (validation/test) in a stratified way.
@@ -78,12 +79,12 @@ def main():
     weights = ResNet50_Weights.DEFAULT
     model = resnet50(weights=weights)
     num_features = model.fc.in_features
-    model.fc = nn.Linear(num_features, len(train_data.classes))
+    model.fc = nn.Linear(num_features, 9)
 
-    # Freeze all layers except the final classifier
-    for name, param in model.named_parameters():
-        if not name.startswith("fc"):
-            param.requires_grad = False
+    for name, layer in model.named_children():
+        if name in ['conv1', 'bn1', 'layer1', 'layer2', "layer3"]:
+            for param in layer.parameters():
+                param.requires_grad = False
 
     # Loss and optimizer
     criterion = nn.CrossEntropyLoss()

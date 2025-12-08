@@ -9,14 +9,24 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import re
 from sklearn.model_selection import train_test_split
+import random
+import numpy as np
+import torch
+
+seed = 42
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+
 
 # === Utility to extract labels ===
 def extract_labels(paths):
     return np.array([int(re.search(r'(\d)(?=\.jpg$)', p).group(1)) for p in paths])
 
 # === Load embeddings ===
-train_data = np.load("../normalised_embeddings/dino_normalised_embeddings_train_gray.npz")
-test_data = np.load("../normalised_embeddings/dino_normalised_embeddings_test_gray.npz")
+train_data = np.load("../normalised_embeddings/dino_normalised_embeddings_train.npz")
+test_data = np.load("../normalised_embeddings/dino_normalised_embeddings_test.npz")
 
 X_train = train_data["embeddings"]
 y_train = extract_labels(train_data["image_paths"])
@@ -67,7 +77,7 @@ class SimpleNN(nn.Module):
         return self.model(x)
 
 input_dim = X_train.shape[1]
-hidden_dim = 256
+hidden_dim = 850
 output_dim = 9
 model = SimpleNN(input_dim, hidden_dim, output_dim)
 
@@ -110,14 +120,30 @@ print("\n=== Final Test Metrics (NN with class weights) ===")
 print(f"Accuracy: {acc:.4f}, Macro F1: {f1_macro:.4f}")
 print(classification_report(y_true, y_pred))
 
+# === Save predictions with embeddings ===
+# Note: y_pred is 0-indexed → convert back to 1–9
+predicted_classes = y_pred + 1
+true_classes = y_true + 1
+
+np.savez(
+    "nn_predictions_dinov2_weighted_seed42.npz",
+    embeddings=X_test,             # original numpy embeddings
+    predicted_classes=predicted_classes,
+    true_classes=true_classes
+)
+
+print("Saved predictions to 'nn_predictions_dinov2_weighted_seed42.npz'")
+
+
 # Normalized confusion matrix
 plt.figure(figsize=(7,6))
-sns.heatmap(cm_norm, annot=True, fmt=".2f", cmap='Blues', cbar=False)
-plt.title("Normalized Confusion Matrix (NN with class weights)")
+sns.heatmap(cm_norm, annot=True, fmt=".2f", cmap='Reds')
+plt.title("Normalized Confusion Matrix Neural Network")
 plt.xlabel("Predicted")
 plt.ylabel("True")
 plt.show()
 
 # Save model
-torch.save(model.state_dict(), "nn_dinov2_weighted_gray.pth")
-print("Saved Neural Network model with class weights to 'nn_dinov2_weighted.pth'")
+torch.save(model.state_dict(), "nn_dinov2_weighted_850_seed42.pth")
+print("Saved Neural Network model with class weights to 'nn_dinov2_weighted_850_seed42.pth'")
+ 

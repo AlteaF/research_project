@@ -40,8 +40,8 @@ def evaluate(model, dataloader, device):
 
 def main():
     # --- Paths ---
-    dataset_root = "../dataset/dataset_prepared/cropped_test"
-    model_path = "saved_models/best_resnet50_finetuned.pth"
+    dataset_root = "../dataset/dataset_prepared_resnet/cropped_test"
+    model_path = "saved_models/best_resnet50_finetuned_up_to_3.pth"
 
     # --- Transforms (same as training) ---
     transform = transforms.Compose([
